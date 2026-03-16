@@ -1,19 +1,148 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
+    align-items: flex-start;
+    min-height: 100vh;
     background-color: #f4f4f4;
     margin: 0;
+    padding: 20px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-.calculatrice {
+/* ==================== THÈME SOMBRE ==================== */
+
+body.theme-sombre {
+    background-color: #1a1a2e;
+    color: #e0e0e0;
+}
+
+/* ==================== CONTENEUR PRINCIPAL ==================== */
+
+.app-container {
+    width: 100%;
+    max-width: 820px;
+}
+
+/* ==================== EN-TÊTE ==================== */
+
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.app-header h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+body.theme-sombre .app-header h1 {
+    color: #e0e0e0;
+}
+
+#btnTheme {
+    font-size: 22px;
+    background: none;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 6px 10px;
+    line-height: 1;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+#btnTheme:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-color: #999;
+}
+
+body.theme-sombre #btnTheme {
+    border-color: #555;
+    color: #e0e0e0;
+}
+
+body.theme-sombre #btnTheme:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ==================== ONGLETS ==================== */
+
+.tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 0;
+}
+
+.tab {
+    flex: 1;
+    padding: 10px 8px;
+    border: none;
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    font-size: 14px;
+    background-color: #bbb;
+    color: #555;
+    transition: background-color 0.2s;
+    font-weight: normal;
+}
+
+.tab:hover {
+    background-color: #aaa;
+}
+
+.tab.active {
     background-color: #333;
+    color: white;
+    font-weight: bold;
+}
+
+body.theme-sombre .tab {
+    background-color: #2d2d44;
+    color: #aaa;
+}
+
+body.theme-sombre .tab.active {
+    background-color: #16213e;
+    color: white;
+}
+
+/* ==================== CONTENU DES ONGLETS ==================== */
+
+.tab-content {
+    display: none;
+    background-color: #333;
+    border-radius: 0 0 10px 10px;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    max-width: 400px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.tab-content.active {
+    display: block;
+}
+
+body.theme-sombre .tab-content {
+    background-color: #16213e;
+}
+
+/* ==================== DISPOSITION CALCULATRICE ==================== */
+
+.calculatrice-layout {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+/* ==================== CALCULATRICE ==================== */
+
+.calculatrice {
+    flex: 0 0 auto;
 }
 
 #ecran {
@@ -25,17 +154,22 @@ body {
     margin-bottom: 15px;
     border: none;
     border-radius: 5px;
-    box-sizing: border-box;
     background-color: #eee;
+    box-sizing: border-box;
+}
+
+body.theme-sombre #ecran {
+    background-color: #0f3460;
+    color: #e0e0e0;
 }
 
 .boutons {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(5, 60px);
     gap: 8px;
 }
 
-button {
+.boutons button {
     height: 60px;
     font-size: 20px;
     border: none;
@@ -47,24 +181,380 @@ button {
     font-weight: bold;
 }
 
-button:hover {
+.boutons button:hover {
     background-color: #888;
 }
 
-button.effacer {
-    background-color: #d9534f;
+body.theme-sombre .boutons button {
+    background-color: #2d2d44;
+}
+
+body.theme-sombre .boutons button:hover {
+    background-color: #3d3d5c;
+}
+
+.btn-operateur {
+    background-color: #e8a020 !important;
+}
+
+.btn-operateur:hover {
+    background-color: #f0b040 !important;
+}
+
+.btn-egal {
+    background-color: #5cb85c !important;
+}
+
+.btn-egal:hover {
+    background-color: #4cae4c !important;
+}
+
+.btn-effacer {
+    background-color: #d9534f !important;
     grid-column: span 2;
 }
 
-button.effacer:hover {
-    background-color: #c9302c;
+.btn-effacer:hover {
+    background-color: #c9302c !important;
 }
 
-/* Style pour les boutons de mémoire */
-button:nth-last-child(-n+3) {
+.btn-memoire {
+    background-color: #5bc0de !important;
+}
+
+.btn-memoire:hover {
+    background-color: #31b0d5 !important;
+}
+
+.btn-fonction {
+    background-color: #8e44ad !important;
+}
+
+.btn-fonction:hover {
+    background-color: #9b59b6 !important;
+}
+
+/* ==================== HISTORIQUE ==================== */
+
+.historique-panel {
+    flex: 1;
+    background-color: #444;
+    border-radius: 8px;
+    padding: 15px;
+    min-width: 180px;
+    max-height: 420px;
+    overflow-y: auto;
+}
+
+body.theme-sombre .historique-panel {
+    background-color: #0d2137;
+}
+
+.historique-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    color: white;
+}
+
+.historique-header h3 {
+    margin: 0;
+    font-size: 15px;
+}
+
+.historique-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.btn-icon {
+    height: 28px !important;
+    width: 28px !important;
+    font-size: 14px !important;
+    padding: 0 !important;
+    font-weight: normal !important;
+    background-color: #555 !important;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    transition: background-color 0.2s;
+}
+
+.btn-icon:hover {
+    background-color: #777 !important;
+}
+
+.historique-item {
+    background-color: #555;
+    border-radius: 5px;
+    padding: 8px 10px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    color: white;
+}
+
+.historique-item:hover {
+    background-color: #777;
+}
+
+body.theme-sombre .historique-item {
+    background-color: #1a3a5c;
+}
+
+body.theme-sombre .historique-item:hover {
+    background-color: #2a4a6c;
+}
+
+.historique-calcul {
+    display: block;
+    font-size: 12px;
+    color: #bbb;
+}
+
+.historique-resultat {
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.historique-vide {
+    color: #aaa;
+    text-align: center;
+    font-style: italic;
+    margin: 20px 0;
+}
+
+/* ==================== CONVERSION D'UNITÉS ==================== */
+
+.conversion-container {
+    color: white;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.conversion-categorie {
+    margin-bottom: 25px;
+    font-size: 16px;
+}
+
+.conversion-categorie label {
+    margin-right: 10px;
+}
+
+.conversion-categorie select {
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: none;
+    background-color: #555;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+body.theme-sombre .conversion-categorie select {
+    background-color: #1a3a5c;
+}
+
+.conversion-inputs {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.conversion-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 160px;
+}
+
+.conversion-group input {
+    padding: 10px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    background-color: #555;
+    color: white;
+    text-align: right;
+    width: 100%;
+}
+
+.conversion-group input[readonly] {
+    background-color: #444;
+    cursor: default;
+}
+
+body.theme-sombre .conversion-group input {
+    background-color: #0f3460;
+}
+
+body.theme-sombre .conversion-group input[readonly] {
+    background-color: #0d2137;
+}
+
+.conversion-group select {
+    padding: 8px;
+    font-size: 13px;
+    border: none;
+    border-radius: 5px;
+    background-color: #555;
+    color: white;
+    cursor: pointer;
+    width: 100%;
+}
+
+body.theme-sombre .conversion-group select {
+    background-color: #1a3a5c;
+}
+
+.btn-swap {
+    height: 50px;
+    width: 50px;
+    font-size: 22px;
     background-color: #5bc0de;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    color: white;
+    transition: background-color 0.2s, transform 0.2s;
+    flex-shrink: 0;
+    font-weight: bold;
 }
 
-button:nth-last-child(-n+3):hover {
+.btn-swap:hover {
     background-color: #31b0d5;
+    transform: rotate(180deg);
 }
+
+/* ==================== CALCULATEUR DE POURBOIRE ==================== */
+
+.pourboire-container {
+    color: white;
+    max-width: 420px;
+    margin: 0 auto;
+}
+
+.pourboire-container h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #ccc;
+}
+
+.form-group input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    background-color: #555;
+    color: white;
+}
+
+body.theme-sombre .form-group input[type="number"] {
+    background-color: #0f3460;
+}
+
+.pourcentage-presets {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.pourcentage-presets button {
+    flex: 1;
+    height: 38px;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #e8a020;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.pourcentage-presets button:hover {
+    background-color: #f0b040;
+}
+
+.pourboire-resultat {
+    background-color: #444;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 10px;
+}
+
+body.theme-sombre .pourboire-resultat {
+    background-color: #0d2137;
+}
+
+.resultat-ligne {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #555;
+    font-size: 16px;
+    color: #ddd;
+}
+
+.resultat-ligne:last-child {
+    border-bottom: none;
+}
+
+.resultat-ligne.total {
+    font-weight: bold;
+    font-size: 19px;
+    color: #5cb85c;
+}
+
+.resultat-ligne.par-personne {
+    color: #5bc0de;
+    font-weight: bold;
+}
+
+/* ==================== RESPONSIVE ==================== */
+
+@media (max-width: 640px) {
+    body {
+        padding: 10px;
+    }
+
+    .calculatrice-layout {
+        flex-direction: column;
+    }
+
+    .historique-panel {
+        max-height: 200px;
+        width: 100%;
+    }
+
+    .conversion-inputs {
+        flex-direction: column;
+    }
+
+    .btn-swap {
+        transform: rotate(90deg);
+        align-self: center;
+    }
+
+    .btn-swap:hover {
+        transform: rotate(270deg);
+    }
+}
+

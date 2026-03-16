@@ -7,37 +7,130 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="calculatrice">
-        <input type="text" id="ecran" readonly>
-        <div class="boutons">
-            <button onclick="ajouter('7')">7</button>
-            <button onclick="ajouter('8')">8</button>
-            <button onclick="ajouter('9')">9</button>
-            <button onclick="operation('/')">/</button>
-            <button onclick="racine()">√</button>
+    <div class="app-container">
 
-            <button onclick="ajouter('4')">4</button>
-            <button onclick="ajouter('5')">5</button>
-            <button onclick="ajouter('6')">6</button>
-            <button onclick="operation('*')">×</button>
-            <button onclick="puissance()">x²</button>
-
-            <button onclick="ajouter('1')">1</button>
-            <button onclick="ajouter('2')">2</button>
-            <button onclick="ajouter('3')">3</button>
-            <button onclick="operation('-')">−</button>
-            <button onclick="pourcentage()">%</button>
-
-            <button onclick="ajouter('0')">0</button>
-            <button onclick="ajouter('.')">.</button>
-            <button onclick="calculer()">=</button>
-            <button onclick="operation('+')">+</button>
-            <button onclick="effacer()" class="effacer">C</button>
-
-            <button onclick="memRappel()">MR</button>
-            <button onclick="memStock()">MS</button>
-            <button onclick="memRaz()">MC</button>
+        <!-- En-tête -->
+        <div class="app-header">
+            <h1>🔢 Korki-Calcu</h1>
+            <button id="btnTheme" onclick="toggleTheme()" title="Changer le thème">🌙</button>
         </div>
+
+        <!-- Navigation par onglets -->
+        <div class="tabs" role="tablist">
+            <button class="tab active" data-tab="calculatrice" onclick="changerTab('calculatrice')" role="tab" aria-selected="true" aria-controls="tab-calculatrice" id="btn-tab-calculatrice">🔢 Calculatrice</button>
+            <button class="tab" data-tab="conversion" onclick="changerTab('conversion')" role="tab" aria-selected="false" aria-controls="tab-conversion" id="btn-tab-conversion">📏 Conversion</button>
+            <button class="tab" data-tab="pourboire" onclick="changerTab('pourboire')" role="tab" aria-selected="false" aria-controls="tab-pourboire" id="btn-tab-pourboire">🍽️ Pourboire</button>
+        </div>
+
+        <!-- Onglet : Calculatrice -->
+        <div id="tab-calculatrice" class="tab-content active" role="tabpanel" aria-labelledby="btn-tab-calculatrice">
+            <div class="calculatrice-layout">
+
+                <!-- Calculatrice -->
+                <div class="calculatrice">
+                    <input type="text" id="ecran" readonly aria-label="Écran de la calculatrice">
+                    <div class="boutons">
+                        <button onclick="ajouter('7')">7</button>
+                        <button onclick="ajouter('8')">8</button>
+                        <button onclick="ajouter('9')">9</button>
+                        <button class="btn-operateur" onclick="operation('/')">/</button>
+                        <button class="btn-fonction" onclick="racine()">√</button>
+
+                        <button onclick="ajouter('4')">4</button>
+                        <button onclick="ajouter('5')">5</button>
+                        <button onclick="ajouter('6')">6</button>
+                        <button class="btn-operateur" onclick="operation('*')">×</button>
+                        <button class="btn-fonction" onclick="puissance()">x²</button>
+
+                        <button onclick="ajouter('1')">1</button>
+                        <button onclick="ajouter('2')">2</button>
+                        <button onclick="ajouter('3')">3</button>
+                        <button class="btn-operateur" onclick="operation('-')">−</button>
+                        <button class="btn-fonction" onclick="pourcentage()">%</button>
+
+                        <button onclick="ajouter('0')">0</button>
+                        <button onclick="ajouter('.')">.</button>
+                        <button class="btn-egal" onclick="calculer()">=</button>
+                        <button class="btn-operateur" onclick="operation('+')">+</button>
+                        <button onclick="effacerDernier()" title="Supprimer le dernier caractère (Retour arrière)">←</button>
+
+                        <button class="btn-effacer" onclick="effacer()">C</button>
+                        <button class="btn-memoire" onclick="memRappel()">MR</button>
+                        <button class="btn-memoire" onclick="memStock()">MS</button>
+                        <button class="btn-memoire" onclick="memRaz()">MC</button>
+                    </div>
+                </div>
+
+                <!-- Historique des calculs -->
+                <div class="historique-panel">
+                    <div class="historique-header">
+                        <h3>📜 Historique</h3>
+                        <div class="historique-actions">
+                            <button class="btn-icon" onclick="exporterHistorique()" title="Exporter l'historique en fichier texte">⬇️</button>
+                            <button class="btn-icon" onclick="effacerHistorique()" title="Effacer l'historique">🗑️</button>
+                        </div>
+                    </div>
+                    <div id="historique-liste">
+                        <p class="historique-vide">Aucun calcul</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Onglet : Conversion d'unités -->
+        <div id="tab-conversion" class="tab-content" role="tabpanel" aria-labelledby="btn-tab-conversion">
+            <div class="conversion-container">
+                <div class="conversion-categorie">
+                    <label for="categorie">Catégorie :</label>
+                    <select id="categorie" onchange="changerCategorie()">
+                        <option value="longueur">📐 Longueur</option>
+                        <option value="poids">⚖️ Poids</option>
+                        <option value="temperature">🌡️ Température</option>
+                    </select>
+                </div>
+                <div class="conversion-inputs">
+                    <div class="conversion-group">
+                        <input type="number" id="valeur1" placeholder="Valeur" oninput="convertir()">
+                        <select id="unite1" onchange="convertir()"></select>
+                    </div>
+                    <button class="btn-swap" onclick="inverserUnites()" title="Inverser les unités">⇄</button>
+                    <div class="conversion-group">
+                        <input type="number" id="valeur2" placeholder="Résultat" readonly>
+                        <select id="unite2" onchange="convertir()"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Onglet : Calculateur de pourboire -->
+        <div id="tab-pourboire" class="tab-content" role="tabpanel" aria-labelledby="btn-tab-pourboire">
+            <div class="pourboire-container">
+                <h3>🍽️ Calculateur de pourboire</h3>
+                <div class="pourboire-form">
+                    <div class="form-group">
+                        <label for="addition">Montant de l'addition (€) :</label>
+                        <input type="number" id="addition" placeholder="0.00" min="0" step="0.01" oninput="calculPourboire()">
+                    </div>
+                    <div class="form-group">
+                        <label>Pourcentage de pourboire :</label>
+                        <div class="pourcentage-presets">
+                            <button onclick="setPourcentage(10)">10%</button>
+                            <button onclick="setPourcentage(15)">15%</button>
+                            <button onclick="setPourcentage(20)">20%</button>
+                            <button onclick="setPourcentage(25)">25%</button>
+                        </div>
+                        <input type="number" id="pourcentagePb" value="15" min="0" max="100" oninput="calculPourboire()">
+                    </div>
+                    <div class="form-group">
+                        <label for="nbPersonnes">Nombre de personnes :</label>
+                        <input type="number" id="nbPersonnes" value="1" min="1" oninput="calculPourboire()">
+                    </div>
+                </div>
+                <div id="pourboire-resultat" class="pourboire-resultat"></div>
+            </div>
+        </div>
+
     </div>
     <script src="script.js"></script>
 </body>
