@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Korki-Calcu</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="calculatrice">
+        <input type="text" id="ecran" readonly>
+        <div class="boutons">
+            <button onclick="ajouter('7')">7</button>
+            <button onclick="ajouter('8')">8</button>
+            <button onclick="ajouter('9')">9</button>
+            <button onclick="operation('/')">/</button>
+            <button onclick="racine()">√</button>
+
+            <button onclick="ajouter('4')">4</button>
+            <button onclick="ajouter('5')">5</button>
+            <button onclick="ajouter('6')">6</button>
+            <button onclick="operation('*')">×</button>
+            <button onclick="puissance()">x²</button>
+
+            <button onclick="ajouter('1')">1</button>
+            <button onclick="ajouter('2')">2</button>
+            <button onclick="ajouter('3')">3</button>
+            <button onclick="operation('-')">−</button>
+            <button onclick="pourcentage()">%</button>
+
+            <button onclick="ajouter('0')">0</button>
+            <button onclick="ajouter('.')">.</button>
+            <button onclick="calculer()">=</button>
+            <button onclick="operation('+')">+</button>
+            <button onclick="effacer()" class="effacer">C</button>
+
+            <button onclick="memRappel()">MR</button>
+            <button onclick="memStock()">MS</button>
+            <button onclick="memRaz()">MC</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
